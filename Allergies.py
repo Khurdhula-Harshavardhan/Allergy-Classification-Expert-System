@@ -6,7 +6,7 @@ class Allergy():
     """
     __allergies = None
     __probabilities = None
-    
+    __THRESHOLD = None
     def __init__(self) -> None:
         """
         This is the constructor of Allery, that initializes the python dictionary data structure,
@@ -74,6 +74,8 @@ class Allergy():
         print("[PROBA] Initializing Probabilities for each allergy.")
         self.init_probablities()
         print("[RESULT] The default probabilities have been assigned.")
+        self.__THRESHOLD = 0.6
+        print("[THRESHOLD] Initialized Decision making threshold to 0.6.")
 
     def init_probablities(self):
         try:
@@ -82,12 +84,45 @@ class Allergy():
         except Exception as e:
             print("[ERR] The following error occured while initializing probabilities for Allergies: "+str(e))
 
+    def update_probability(self, allergy: str, probability: float) -> None:
+        """
+        Updates the probability for the possible allergy. 
+        """
+        try:
+            self.__probabilities[allergy] = probability
+        except Exception as e:
+            print("[ERR] The following error occured while trying to update probability for an allergy: "+str(e))
+    
+    def get_probabilites(self) -> dict:
+        """
+        Returns the probabilities of each allergy.
+        """
+        return self.__probabilities
+
+    def determine_allergies(self) -> dict():
+        try:
+            pass
+        except Exception as e:
+            print("[ERR] The following error occured while trying to determine probable allergies: "+str(e))
+
     def diagnose(self, user_symptoms: list) -> list:
         """
         This method, accepts the user entered symptoms that will be used to determine most probable allergy.
         """
         try:
-            pass
+            print("[DIAGNOSIS] Please wait while the diagnosis is performed.")
+            for allergy, symptoms in self.__allergies.items():
+                matched_symptoms = 0
+                total_symptoms = len(symptoms)
+                for symptom in user_symptoms:
+                    if symptom in symptoms:
+                        counter = counter+1
+                
+                self.update_probability(allergy= allergy, probability= (matched_symptoms / total_symptoms))
+            print("[DIAGNOSIS] Probabilities have been computed for possible allergies.")
+
+            self.determine_allergies()
+
         except Exception as e:
             print("[ERR] The following error occured while trying to predict probable Allergies: "+str(e))
 
