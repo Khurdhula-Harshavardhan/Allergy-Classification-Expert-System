@@ -73,10 +73,11 @@ class Allergy():
         print("[RESULT] The Allergy data has been Initialized successfully!")
 
         print("[PROBA] Initializing Probabilities for each allergy.")
+        self.__probabilities = dict()
         self.init_probablities()
         print("[RESULT] The default probabilities have been assigned.")
-        self.__THRESHOLD = 0.6
-        print("[THRESHOLD] Initialized Decision making threshold to 0.6.")
+        self.__THRESHOLD = 0.5
+        print("[THRESHOLD] Initialized Decision making threshold to %f."%(self.__THRESHOLD))
         self.__result = dict()
     def init_probablities(self):
         try:
@@ -90,6 +91,7 @@ class Allergy():
         Updates the probability for the possible allergy. 
         """
         try:
+            print("[PROBA] Updating probability of '%s' with %f."%(allergy, probability))
             self.__probabilities[allergy] = probability
         except Exception as e:
             print("[ERR] The following error occured while trying to update probability for an allergy: "+str(e))
@@ -105,7 +107,7 @@ class Allergy():
             print("[DIAGNOSIS] Determining the possible allergies...")
 
             for allergy, probability in self.__probabilities.items():
-                if probability>= 0.6:
+                if probability>= self.__THRESHOLD:
                     self.__result[allergy] = probability
             
             print("[DIAGNOSIS] Possible Allergies have been computed!")
@@ -123,7 +125,7 @@ class Allergy():
                 total_symptoms = len(symptoms)
                 for symptom in user_symptoms:
                     if symptom in symptoms:
-                        counter = counter+1
+                        matched_symptoms = matched_symptoms + 1
                 
                 self.update_probability(allergy= allergy, probability= (matched_symptoms / total_symptoms))
             print("[DIAGNOSIS] Probabilities have been computed for possible allergies.")

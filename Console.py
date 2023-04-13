@@ -8,6 +8,7 @@ class Console():
     These results are then returned.
     """
     __expert_system = None
+
     def __init__(self) -> None:
         print("[CONSOLE] Initializing the Expert System...")
         self.__expert_system = Allergy()
@@ -15,11 +16,15 @@ class Console():
 
     def run(self) -> None:
         try:
-            symptoms = input("Enter symptoms you have: ")
+            symptoms = input("[INPUT] Enter symptoms you have: ")
             symptoms = symptoms.lower()
             symptoms = symptoms.replace(" ", '')
             symptoms = symptoms.strip("\n")
-            symptoms =symptoms.split(" ")
-
+            symptoms =symptoms.split(",")
+            print(symptoms)
+            print(self.__expert_system.diagnose(symptoms))
         except Exception as e:
             print("[ERR] The following error occured while trying to run the user console: "+str(e))
+
+
+Console().run()
