@@ -7,6 +7,7 @@ class Allergy():
     __allergies = None
     __probabilities = None
     __THRESHOLD = None
+    __result = None
     def __init__(self) -> None:
         """
         This is the constructor of Allery, that initializes the python dictionary data structure,
@@ -76,7 +77,7 @@ class Allergy():
         print("[RESULT] The default probabilities have been assigned.")
         self.__THRESHOLD = 0.6
         print("[THRESHOLD] Initialized Decision making threshold to 0.6.")
-
+        self.__result = dict()
     def init_probablities(self):
         try:
             for allergy, symptom in self.__allergies.items():
@@ -99,9 +100,15 @@ class Allergy():
         """
         return self.__probabilities
 
-    def determine_allergies(self) -> dict():
+    def determine_allergies(self) -> None:
         try:
-            pass
+            print("[DIAGNOSIS] Determining the possible allergies...")
+
+            for allergy, probability in self.__probabilities.items():
+                if probability>= 0.6:
+                    self.__result[allergy] = probability
+            
+            print("[DIAGNOSIS] Possible Allergies have been computed!")
         except Exception as e:
             print("[ERR] The following error occured while trying to determine probable allergies: "+str(e))
 
@@ -122,7 +129,7 @@ class Allergy():
             print("[DIAGNOSIS] Probabilities have been computed for possible allergies.")
 
             self.determine_allergies()
-
+            return self.__result
         except Exception as e:
             print("[ERR] The following error occured while trying to predict probable Allergies: "+str(e))
 
