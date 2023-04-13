@@ -82,6 +82,15 @@ class Allergy():
         except Exception as e:
             print("[ERR] The following error occured while initializing probabilities for Allergies: "+str(e))
 
+    def diagnose(self, user_symptoms: list) -> list:
+        """
+        This method, accepts the user entered symptoms that will be used to determine most probable allergy.
+        """
+        try:
+            pass
+        except Exception as e:
+            print("[ERR] The following error occured while trying to predict probable Allergies: "+str(e))
+
 
 
 
