@@ -8,6 +8,7 @@ class Allergy():
     __probabilities = None
     __THRESHOLD = None
     __result = None
+    __symptoms = None
     def __init__(self) -> None:
         """
         This is the constructor of Allery, that initializes the python dictionary data structure,
@@ -79,6 +80,28 @@ class Allergy():
         self.__THRESHOLD = 0.5
         print("[THRESHOLD] Initialized Decision making threshold to %f."%(self.__THRESHOLD))
         self.__result = dict()
+        self.__symptoms = list()
+        self.init_symptoms()
+
+    def init_symptoms(self) -> None:
+        try:
+            print("[SYMPTOM] Defining list of symptoms")
+            for allergy, symptoms in self.__allergies.items():
+                for symptom in symptoms:
+                    if symptom in self.__symptoms:
+                        continue
+                    else:
+                        self.__symptoms.append(symptom)
+            print("[SYMPTOM] Defined list of symptoms")
+        except Exception as e:
+            print("[ERR] The following error occured while trying to create a distinct list of symptoms: "+str(e))
+
+    def get_symptoms(self) -> list():
+        """
+        Returns a list of distinct symptoms..
+        """
+        return self.__symptoms
+    
     def init_probablities(self):
         try:
             for allergy, symptom in self.__allergies.items():
@@ -91,7 +114,7 @@ class Allergy():
         Updates the probability for the possible allergy. 
         """
         try:
-            print("[PROBA] Updating probability of '%s' with %f."%(allergy, probability))
+            #print("[PROBA] Updating probability of '%s' with %f."%(allergy, probability))
             self.__probabilities[allergy] = probability
         except Exception as e:
             print("[ERR] The following error occured while trying to update probability for an allergy: "+str(e))
